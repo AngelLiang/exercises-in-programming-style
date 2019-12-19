@@ -37,6 +37,7 @@ class IWordFrequencyCounter(metaclass=abc.ABCMeta):
 # The concrete things
 #
 class DataStorageManager:
+    """数据读取"""
     _data = ''
     def __init__(self, path_to_file):
         with open(path_to_file) as f:
@@ -49,6 +50,7 @@ class DataStorageManager:
         return self._data
 
 class StopWordManager:
+    """获取停止词"""
     _stop_words = []
     def __init__(self):
         with open('../stop_words.txt') as f:
@@ -59,6 +61,7 @@ class StopWordManager:
         return word in self._stop_words
 
 class WordFrequencyManager:
+    """词频判断"""
     _word_freqs = {}
 
     def increment_count(self, word):
@@ -82,6 +85,8 @@ IWordFrequencyCounter.register(subclass=WordFrequencyManager)
 # The application object
 #
 class WordFrequencyController:
+    """主控制器"""
+
     def __init__(self, path_to_file):
         self._storage = DataStorageManager(path_to_file)
         self._stop_word_manager = StopWordManager()
